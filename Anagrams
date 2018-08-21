@@ -1,0 +1,84 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the makingAnagrams function below.
+    static int makingAnagrams(String s1, String s2) {
+    Map<Character,Integer> map1 = new HashMap<Character,Integer>();
+    Map<Character,Integer> map2 = new HashMap<Character,Integer>();
+        int test = 0;
+        for(int i = 0; i < s1.length(); i++){
+            if(map1.containsKey(s1.charAt(i))){
+                //key is already in
+                map1.put(s1.charAt(i),map1.get(s1.charAt(i)) + 1);
+            }
+            else{
+                map1.put(s1.charAt(i),1);
+            }
+        }
+        for(int j = 0; j < s2.length(); j++){
+            if(map2.containsKey(s2.charAt(j))){
+                //key is already in
+                map2.put(s2.charAt(j),map2.get(s2.charAt(j)) + 1);
+            }
+            else{
+                map2.put(s2.charAt(j),1);
+            }
+        }
+        char key;
+//         for(int k = 0; k < map1.size(); k++){
+            
+//         }
+        int counter = 0;
+         for (Map.Entry<Character,Integer> entry : map1.entrySet()){
+             key = entry.getKey();
+             if(map2.containsKey(key)){
+                 //the key is in both maps
+                 if(entry.getValue() < map2.get(key)){
+                     //key in map 1 is less than key in map 2
+                     counter += entry.getValue();
+                 }
+                    else if(entry.getValue() > map2.get(key)){
+                        counter += map2.get(key);
+                    }
+                    else{
+                        counter += map2.get(key);
+                    }
+             }
+             else{
+                 //key is not in both maps
+                 
+             }
+         }
+int ans = (s1.length() - counter) + (s2.length() - counter);      
+        
+        
+return ans;
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String s1 = scanner.nextLine();
+
+        String s2 = scanner.nextLine();
+
+        int result = makingAnagrams(s1, s2);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
+
